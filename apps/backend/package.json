@@ -1,0 +1,51 @@
+{
+  "name": "@stormix/backend",
+  "scripts": {
+    "dev:server": "bun --watch run src/index.ts",
+    "dev": "concurrently \"pnpm dev:server\"",
+    "start": "bun run src/index.ts",
+    "lint": "eslint src/ --ext .ts --fix",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "scripts": "bun run src/scripts/index.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/types/server.ts"
+    }
+  },
+  "dependencies": {
+    "@hatchet-dev/typescript-sdk": "^1.1.2",
+    "@hono/zod-validator": "^0.4.3",
+    "@stormix/shared": "workspace:*",
+    "@sentry/bun": "^9.11.0",
+    "@type-cacheable/cache-manager-adapter": "^17.0.0",
+    "@type-cacheable/core": "^14.1.0",
+    "axios": "^1.8.4",
+    "better-auth": "1.2.3",
+    "cache-manager": "^5.7.6",
+    "cacheable": "^1.8.10",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.41.0",
+    "hono": "^4.7.5",
+    "mitt": "^3.0.1",
+    "nanoid": "^5.1.5",
+    "neverthrow": "^8.2.0",
+    "pg": "^8.14.1",
+    "redis": "^4.7.0",
+    "typeid-js": "^1.2.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@stormix/eslint-config": "workspace:*",
+    "@stormix/typescript-config": "workspace:*",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/bun": "latest",
+    "@types/pg": "^8.11.13",
+    "concurrently": "^9.1.2",
+    "drizzle-kit": "^0.30.6"
+  }
+}
