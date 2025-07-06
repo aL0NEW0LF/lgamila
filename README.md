@@ -13,7 +13,6 @@ This Turborepo includes the following packages/apps:
 
 ### Packages
 
-- `@stormix/eslint-config`: ESLint configurations
 - `@stormix/typescript-config`: TypeScript configurations used throughout the monorepo
 
 ## Tech Stack

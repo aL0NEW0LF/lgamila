@@ -6,8 +6,7 @@
     ".": "./src/index.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@stormix/eslint-config": "workspace:*"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
