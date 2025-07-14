@@ -8,12 +8,12 @@ This Turborepo includes the following packages/apps:
 
 ### Apps
 
-- `backend`: Backend service 
+- `backend`: Backend service
 - `client`: Web client application
 
 ### Packages
 
-- `@stormix/typescript-config`: TypeScript configurations used throughout the monorepo
+- `@moroccan-stream/typescript-config`: TypeScript configurations used throughout the monorepo
 
 ## Tech Stack
 

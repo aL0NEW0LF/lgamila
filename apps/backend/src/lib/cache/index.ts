@@ -1,7 +1,12 @@
-import cache from "./default";
-import { useAdapter } from "@type-cacheable/cache-manager-adapter";
-import cacheManager, { Cacheable, CacheClear } from "@type-cacheable/core";
+import { useAdapter } from '@type-cacheable/cache-manager-adapter';
+import cache from './default';
 
-export const cacheClient = useAdapter(cache);
-export * as defaultCache from "./default";
-export { Cacheable, CacheClear, cacheManager };
+// biome-ignore lint/correctness/useHookAtTopLevel: This is not a hook
+export const c = useAdapter(cache);
+
+export {
+  Cacheable,
+  CacheClear,
+  default as cacheManager,
+} from '@type-cacheable/core';
+export * as defaultCache from './default';

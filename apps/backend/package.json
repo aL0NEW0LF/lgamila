@@ -1,15 +1,17 @@
 {
-  "name": "@stormix/backend",
+  "name": "@moroccan-stream/backend",
   "scripts": {
-    "dev:server": "bun --watch run src/index.ts",
-    "dev": "concurrently \"pnpm dev:server\"",
+    "dev": "pnpm --filter @moroccan-stream/backend --parallel \"/^dev:.*/\"",
+    "dev:worker": "bun run --hot src/worker.ts",
+    "dev:server": "bun run --hot src/index.ts",
     "start": "bun run src/index.ts",
-    "lint": "eslint src/ --ext .ts --fix",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "scripts": "bun run src/scripts/index.ts"
+    "scripts": "bun run src/scripts/index.ts",
+    "lint": "npx ultracite lint",
+    "format": "npx ultracite format"
   },
   "exports": {
     ".": {
@@ -17,19 +19,27 @@
     }
   },
   "dependencies": {
-    "@hatchet-dev/typescript-sdk": "^1.1.2",
     "@hono/zod-validator": "^0.4.3",
-    "@stormix/shared": "workspace:*",
+    "@keyv/redis": "^4.6.0",
+    "@moroccan-stream/logging": "workspace:*",
+    "@moroccan-stream/shared": "workspace:*",
     "@sentry/bun": "^9.11.0",
+    "@sentry/node": "^9.38.0",
+    "@twurple/api": "^7.3.0",
+    "@twurple/auth": "^7.3.0",
     "@type-cacheable/cache-manager-adapter": "^17.0.0",
     "@type-cacheable/core": "^14.1.0",
     "axios": "^1.8.4",
     "better-auth": "1.2.3",
-    "cache-manager": "^5.7.6",
-    "cacheable": "^1.8.10",
+    "bullmq": "^5.56.4",
+    "cache-manager": "^7.0.1",
+    "cacheable": "^1.10.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
     "hono": "^4.7.5",
+    "ioredis": "^5.6.1",
+    "it-batch": "^3.0.9",
+    "keyv": "^5.3.4",
     "mitt": "^3.0.1",
     "nanoid": "^5.1.5",
     "neverthrow": "^8.2.0",
@@ -40,7 +50,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@stormix/typescript-config": "workspace:*",
+    "@moroccan-stream/typescript-config": "workspace:*",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/bun": "latest",
     "@types/pg": "^8.11.13",

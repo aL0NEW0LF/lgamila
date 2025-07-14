@@ -1,7 +1,8 @@
-import { db } from "../db";
-import { config } from "../db/schema";
-import { eq } from "drizzle-orm";
-import { Cacheable, CacheClear } from "../cache";
+import { eq } from 'drizzle-orm';
+import { Cacheable, CacheClear } from '../cache';
+import { db } from '../db';
+import { config } from '../db/schema';
+import { logger } from '../logger';
 
 export class ConfigService {
   private static singleton: ConfigService;
@@ -41,18 +42,18 @@ export class ConfigService {
   async getNumber(key: string): Promise<number | null> {
     const value = await this.get<string | number>(key);
     if (value === null) return null;
-    if (typeof value === "number") return value;
+    if (typeof value === 'number') return value;
 
     const parsed = Number(value);
-    return isNaN(parsed) ? null : parsed;
+    return Number.isNaN(parsed) ? null : parsed;
   }
 
   async getBoolean(key: string): Promise<boolean | null> {
     const value = await this.get<string | boolean>(key);
     if (value === null) return null;
-    if (typeof value === "boolean") return value;
+    if (typeof value === 'boolean') return value;
 
-    return value.toLowerCase() === "true";
+    return value.toLowerCase() === 'true';
   }
 
   @CacheClear({
@@ -61,7 +62,7 @@ export class ConfigService {
   async set<T>(key: string, value: T): Promise<void> {
     const now = new Date();
     const stringValue =
-      typeof value === "string" ? value : JSON.stringify(value);
+      typeof value === 'string' ? value : JSON.stringify(value);
 
     try {
       await db
@@ -80,7 +81,7 @@ export class ConfigService {
           },
         });
     } catch (error) {
-      console.error("Failed to set config value:", error);
+      logger.withError(error).error('Failed to set config value');
       throw error;
     }
   }

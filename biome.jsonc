@@ -1,6 +1,72 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
-  "extends": [
-    "ultracite"
-  ]
+  "extends": ["ultracite"],
+  "linter": {
+    "rules": {
+      "a11y": {
+        "noAccessKey": "off",
+        "noAriaHiddenOnFocusable": "off",
+        "noAriaUnsupportedElements": "off",
+        "noAutofocus": "off",
+        "noDistractingElements": "off",
+        "noHeaderScope": "off",
+        "noInteractiveElementToNoninteractiveRole": "off",
+        "noLabelWithoutControl": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noNoninteractiveTabindex": "off",
+        "noPositiveTabindex": "off",
+        "noRedundantAlt": "off",
+        "noRedundantRoles": "off",
+        "noStaticElementInteractions": "off",
+        "noSvgWithoutTitle": "off",
+        "useAltText": "off",
+        "useAnchorContent": "off",
+        "useAriaActivedescendantWithTabindex": "off",
+        "useAriaPropsForRole": "off",
+        "useButtonType": "off",
+        "useFocusableInteractive": "off",
+        "useHeadingContent": "off",
+        "useHtmlLang": "off",
+        "useIframeTitle": "off",
+        "useKeyWithClickEvents": "off",
+        "useKeyWithMouseEvents": "off",
+        "useMediaCaption": "off",
+        "useSemanticElements": "off",
+        "useValidAnchor": "off",
+        "useValidAriaProps": "off",
+        "useValidAriaRole": "off",
+        "useValidAriaValues": "off",
+        "useValidAutocomplete": "off",
+        "useValidLang": "off"
+      },
+      "style": {
+        "noEnum": "off",
+        "useBlockStatements": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "noImgElement": "off"
+      },
+      "nursery": {
+        "noShadow": "off",
+        "noImportantStyles": "off",
+        "noUnknownAtRule": "off",
+        "noNoninteractiveElementInteractions": "off",
+        "useSortedClasses": "off"
+      },
+      "complexity": {
+        "noVoid": "off",
+        "noThisInStatic": "off"
+      },
+      "suspicious": {
+        "useAwait": "off"
+      },
+      "correctness": {
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        }
+      }
+    }
+  }
 }

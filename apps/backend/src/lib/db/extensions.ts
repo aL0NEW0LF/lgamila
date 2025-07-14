@@ -1,5 +1,5 @@
-import { customType } from "drizzle-orm/pg-core";
-import { TypeID } from "typeid-js";
+import { customType } from 'drizzle-orm/pg-core';
+import { TypeID } from 'typeid-js';
 
 /**
  * This is a custom type for TypeID objects that allows them to be used in Drizzle.
@@ -12,21 +12,18 @@ import { TypeID } from "typeid-js";
  * @param prefix The prefix of the TypeID.
  * @returns A custom type for TypeID objects.
  */
-export const typeId = <TPrefix extends string, TData extends TypeID<TPrefix>>(
-  name: string,
-  prefix: TPrefix,
-) =>
+export const typeId = <TPrefix extends string>(name: string, prefix: TPrefix) =>
   customType<{
-    data: TData;
+    data: string;
     driverData: string;
   }>({
     dataType() {
-      return "text";
+      return 'text';
     },
     toDriver(value: TypeID<TPrefix> | string): string {
       return value.toString();
     },
-    fromDriver(value: string): TData {
-      return TypeID.fromString(value, prefix) as TData;
+    fromDriver(value: string): string {
+      return TypeID.fromString(value, prefix).toString();
     },
   })(name);

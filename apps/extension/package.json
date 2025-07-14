@@ -3,11 +3,14 @@
   "displayName": "Extension",
   "version": "0.0.1",
   "description": "Displays Moroccan Twitch's streamers currently live",
-  "author": "Stormix <hello@stormix.dev>",
+  "author": "Stormix <hello@moroccan-stream.dev>",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "lint": "npx ultracite lint",
+    "format": "npx ultracite format",
+    "check-types": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "plasmo": "0.90.5",

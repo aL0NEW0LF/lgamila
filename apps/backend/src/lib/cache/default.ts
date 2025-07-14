@@ -1,10 +1,12 @@
-import { createCache, memoryStore } from "cache-manager";
+import { createKeyv as createKeyvRedis } from '@keyv/redis';
+import { createCache } from 'cache-manager';
+import { env } from '../env';
 
-const cache = createCache(
-  memoryStore({
-    max: 1000,
-    ttl: 60 * 1000 /*milliseconds*/,
-  }),
-);
+const redisStore = createKeyvRedis(env.REDIS_URL);
+
+const cache = createCache({
+  stores: [redisStore],
+  ttl: env.CACHE_TTL,
+});
 
 export default cache;

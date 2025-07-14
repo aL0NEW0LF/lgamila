@@ -1,4 +1,4 @@
-# @stormix/shared
+# @moroccan-stream/shared
 
 To install dependencies:
 

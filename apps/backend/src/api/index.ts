@@ -1,23 +1,39 @@
-import { Hono } from "hono";
-import { auth } from "../lib/auth";
-import type { ApiContext } from "../types/api";
-import { TypeID } from "typeid-js";
+import { Hono } from 'hono';
+import cache from '@/lib/cache/default';
+import { db } from '@/lib/db';
+import { logger } from '@/lib/logger';
+import type { ApiContext } from '../types/api';
 
-const api = new Hono<ApiContext>()
-  .use("*", async (c, next) => {
-    const session = await auth.api.getSession({ headers: c.req.raw.headers });
-    if (!session) {
-      c.set("user", null);
-      c.set("session", null);
-      return next();
-    }
-    c.set("user", {
-      ...session.user,
-      id: TypeID.fromString(session.user.id.toString(), "user"),
+const api = new Hono<ApiContext>().get('/streamers', async (c) => {
+  const cachedStreamers = await cache.get<string>('streamers');
+
+  if (cachedStreamers) {
+    logger.info('Returning cached streamers');
+    return c.json({
+      streamers: JSON.parse(cachedStreamers),
     });
-    c.set("session", session.session);
-    return next();
-  })
-  .on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw));
+  }
+
+  const streamers = await db.query.streamer.findMany({
+    columns: {
+      id: true,
+      name: true,
+      avatarUrl: true,
+      twitchUsername: true,
+      kickUsername: true,
+      isLive: true,
+      livePlatform: true,
+      viewerCount: true,
+      category: true,
+      title: true,
+    },
+  });
+
+  await cache.set('streamers', JSON.stringify(streamers));
+
+  return c.json({
+    streamers,
+  });
+});
 
 export default api;
