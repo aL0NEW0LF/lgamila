@@ -7,6 +7,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 import { typeid as generateId } from 'typeid-js';
 import { typeId } from './extensions';
@@ -41,8 +42,8 @@ export const streamer = pgTable(
       .$defaultFn(() => generateId('streamer').toString()),
     twitchId: text('twitch_id').unique(),
     kickId: text('kick_id').unique(),
-    twitchUsername: text('twitch_username').unique(),
-    kickUsername: text('kick_username').unique(),
+    twitchUsername: text('twitch_username'),
+    kickUsername: text('kick_username'),
     name: text('name').notNull(),
     avatarUrl: text('avatar_url'),
     isLive: boolean('is_live').default(false),
@@ -58,5 +59,15 @@ export const streamer = pgTable(
       'at_least_one_username',
       sql`${table.twitchUsername} IS NOT NULL OR ${table.kickUsername} IS NOT NULL`
     ),
+    uniqueIndex('unique_twitch_username_non_empty')
+      .on(table.twitchUsername)
+      .where(
+        sql`${table.twitchUsername} IS NOT NULL AND ${table.twitchUsername} != ''`
+      ),
+    uniqueIndex('unique_kick_username_non_empty')
+      .on(table.kickUsername)
+      .where(
+        sql`${table.kickUsername} IS NOT NULL AND ${table.kickUsername} != ''`
+      ),
   ]
 );
