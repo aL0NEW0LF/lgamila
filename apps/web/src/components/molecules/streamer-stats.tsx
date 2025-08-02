@@ -7,6 +7,7 @@ interface Streamer {
   name: string;
   isLive: boolean;
   livePlatform: string | null;
+  viewerCount: number;
 }
 
 interface StreamerData {
@@ -29,6 +30,7 @@ function StreamerStatsClient() {
 
   const totalStreamers = data?.streamers.length || 0;
   const liveStreamers = data?.streamers.filter((s) => s.isLive).length || 0;
+  const viewers = data?.streamers.reduce((acc, s) => acc + s.viewerCount, 0) || 0;
   const supportedPlatforms = 2; // Twitch and Kick
 
   if (error) {
@@ -64,6 +66,12 @@ function StreamerStatsClient() {
           {isLoading ? "..." : liveStreamers}
         </div>
         <div className="text-muted-foreground">Currently Live</div>
+      </div>
+      <div className="space-y-2">
+        <div className="text-4xl font-bold text-accent">
+          {isLoading ? "..." : viewers}
+        </div>
+        <div className="text-muted-foreground">Live Viewers</div>
       </div>
       <div className="space-y-2">
         <div className="text-4xl font-bold text-accent">{supportedPlatforms}</div>
