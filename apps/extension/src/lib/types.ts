@@ -29,3 +29,17 @@ export interface Streamer {
   /** Current stream title if live */
   title: string | null;
 }
+
+export interface Settings {
+  /** Whether to automatically redirect to streamer's page when live */
+  autoRedirect: boolean;
+
+  /** Whether to show notifications when streamers go live */
+  notifyWhenStreamerIsLive: boolean;
+
+  /** Whether to only show notifications for favorite streamers */
+  onlyNotifyWhenFavoriteStreamerIsLive: boolean;
+
+  /** Whether to play notification sound */
+  playNotificationSound: boolean;
+}

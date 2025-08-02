@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useStorage } from '@plasmohq/storage/hook';
 import { Save, Settings, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -14,6 +14,7 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
+import type { Settings, Streamer } from '@/lib/types';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -25,21 +26,37 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 
-const formSchema = z.object({
+const formSchema: z.ZodType<Settings> = z.object({
   autoRedirect: z.boolean().default(true),
+  notifyWhenStreamerIsLive: z.boolean().default(true),
+  onlyNotifyWhenFavoriteStreamerIsLive: z.boolean().default(false),
+  playNotificationSound: z.boolean().default(true),
 });
 
 export function SettingsDialog() {
   const [isOpen, setIsOpen] = useState(false);
-  const [settings, setSettings, { setStoreValue }] = useStorage(
+  const [favorites] = useStorage<Streamer['id'][]>('favorites', []);
+  const [settings, _, { setStoreValue }] = useStorage<Settings>(
     'settings',
-    (v) => (v === undefined ? { autoRedirect: true } : v)
+    (v) =>
+      v === undefined
+        ? {
+          autoRedirect: true,
+          notifyWhenStreamerIsLive: true,
+          onlyNotifyWhenFavoriteStreamerIsLive: false,
+          playNotificationSound: true,
+        }
+        : v
   );
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<Settings>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       autoRedirect: settings.autoRedirect,
+      notifyWhenStreamerIsLive: settings.notifyWhenStreamerIsLive ?? true,
+      onlyNotifyWhenFavoriteStreamerIsLive:
+        settings.onlyNotifyWhenFavoriteStreamerIsLive ?? false,
+      playNotificationSound: settings.playNotificationSound ?? true,
     },
   });
 
@@ -47,11 +64,15 @@ export function SettingsDialog() {
     form.reset(settings);
   }, [settings, form]);
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: Settings) => {
     setStoreValue(values);
     toast.success('Settings saved');
     setIsOpen(false);
   };
+
+  const count = useMemo(() => {
+    return favorites.length;
+  }, [favorites]);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
@@ -64,7 +85,9 @@ export function SettingsDialog() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-white">LGamila Settings</DialogTitle>
-            <DialogDescription>HHH lol</DialogDescription>
+            <DialogDescription>
+              Configure the extension to your liking.
+            </DialogDescription>
           </DialogHeader>
 
           <FormField
@@ -89,6 +112,79 @@ export function SettingsDialog() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="notifyWhenStreamerIsLive"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between">
+                <div className="space-y-0.5">
+                  <FormLabel>Live Notifications</FormLabel>
+                  <FormDescription>
+                    Get notified when streamers are live.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    aria-readonly
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="onlyNotifyWhenFavoriteStreamerIsLive"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between">
+                <div className="space-y-0.5">
+                  <FormLabel>
+                    Live Notifications for Favorite Streamers
+                  </FormLabel>
+                  <FormDescription>
+                    Only notify when favorite streamers are live.{' '}
+                    {count === 0 && (
+                      <span className="text-sm text-red-500">
+                        You haven't added any favorite streamers yet.
+                      </span>
+                    )}
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    aria-readonly
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="playNotificationSound"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between">
+                <div className="space-y-0.5">
+                  <FormLabel>Notification Sound</FormLabel>
+                  <FormDescription>
+                    Play a sound when receiving notifications.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    aria-readonly
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <DialogFooter>
             <div className="flex flex-row gap-2 w-full justify-end">
               <Button

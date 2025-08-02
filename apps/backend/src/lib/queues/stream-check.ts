@@ -1,4 +1,5 @@
 import { Queue } from 'bullmq';
+import { STREAM_CHECK_INTERVAL } from '@/constants';
 import { JobName, QueueName } from '../../types/queues';
 import redis from '../redis';
 
@@ -14,7 +15,7 @@ export const scheduleStreamCheckQueue = new Queue(
 );
 
 await scheduleStreamCheckQueue.upsertJobScheduler(JobName.ScheduleStreamCheck, {
-  every: 1000 * 30,
+  every: STREAM_CHECK_INTERVAL,
 });
 
 // Set the max listeners for the queues

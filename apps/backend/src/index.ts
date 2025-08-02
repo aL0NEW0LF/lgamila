@@ -1,12 +1,14 @@
 import * as Sentry from '@sentry/bun';
-import { serve } from 'bun';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger as honoLogger } from 'hono/logger';
 import api from './api';
+import ws, { websocket } from './api/ws';
 import { env, isDev } from './lib/env';
 import { logger } from './lib/logger';
 import type { ApiContext } from './types/api';
+
+import './lib/subscriber';
 import './lib/queues';
 
 process.setMaxListeners(100);
@@ -30,13 +32,15 @@ export const app = new Hono<ApiContext>()
   .get('/health', (c) => {
     return c.json({ status: 'ok' });
   })
-  .route('/api', api);
+  .route('/api', api)
+  .route('/ws', ws);
 
 const main = async () => {
-  const server = serve({
+  const server = Bun.serve({
     port: env.PORT,
     fetch: app.fetch,
     development: env.NODE_ENV !== 'production',
+    websocket,
   });
 
   return server;

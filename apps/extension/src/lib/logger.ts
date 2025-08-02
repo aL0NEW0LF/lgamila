@@ -8,7 +8,7 @@ export class Logger {
   pipe:
     | ((
         type: LogType,
-        text: string[],
+        text: unknown[],
         extraCSS: string[],
         objects?: object[]
       ) => void)
@@ -23,7 +23,7 @@ export class Logger {
 
   private print(
     type: LogType,
-    text: string[],
+    text: unknown[],
     extraCSS: string[],
     objects?: object[]
   ) {
@@ -42,7 +42,7 @@ export class Logger {
     );
   }
 
-  debug(...text: string[]) {
+  debug(...text: unknown[]) {
     return this.print(
       'debug',
       ['%c[DEBUG]%c', ...text],
@@ -50,7 +50,7 @@ export class Logger {
     );
   }
 
-  debugWithObjects(text: string[], objects: object[]) {
+  debugWithObjects(text: unknown[], objects: object[]) {
     return this.print(
       'debug',
       ['%c[DEBUG]%c', ...text],
@@ -59,7 +59,7 @@ export class Logger {
     );
   }
 
-  info(...text: string[]) {
+  info(...text: unknown[]) {
     return this.print(
       'info',
       ['%c[INFO]%c', ...text],
@@ -67,7 +67,7 @@ export class Logger {
     );
   }
 
-  warn(...text: string[]) {
+  warn(...text: unknown[]) {
     return this.print(
       'warn',
       ['%c[WARN]%c', ...text],
@@ -75,7 +75,7 @@ export class Logger {
     );
   }
 
-  error(...text: string[]) {
+  error(...text: unknown[]) {
     return this.print(
       'error',
       ['%c[ERROR]%c', ...text],

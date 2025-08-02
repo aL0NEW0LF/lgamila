@@ -1,5 +1,8 @@
 import type { SandboxedJob } from 'bullmq';
+import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
+import { streamer } from '@/lib/db/schema';
+import { isDev } from '@/lib/env';
 import { logger } from '@/lib/logger';
 import { streamCheckQueue } from '@/lib/queues/stream-check';
 import { JobName, type ScheduleStreamCheckJob } from '@/types/queues';
@@ -12,7 +15,9 @@ export default async function (job: SandboxedJob<ScheduleStreamCheckJob>) {
       })
       .info('Scheduling stream checks');
 
-    const streamers = await db.query.streamer.findMany({});
+    const streamers = await db.query.streamer.findMany({
+      where: isDev ? eq(streamer.twitchUsername, 'stormix_dev') : undefined,
+    });
 
     await Promise.all(
       streamers.map((streamer) =>
@@ -21,6 +26,12 @@ export default async function (job: SandboxedJob<ScheduleStreamCheckJob>) {
         })
       )
     );
+
+    logger
+      .withMetadata({
+        jobId: job.id,
+      })
+      .info(`Scheduled ${streamers.length} stream checks`);
   } catch (error) {
     logger
       .withError(error)

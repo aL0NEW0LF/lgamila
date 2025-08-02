@@ -1,12 +1,16 @@
+import { serverToServer } from '@lgamila/shared';
 import type { SandboxedJob } from 'bullmq';
 import { eq } from 'drizzle-orm';
 import cache from '@/lib/cache/default';
 import { db } from '@/lib/db';
 import { streamer } from '@/lib/db/schema';
 import type { Streamer } from '@/lib/db/types';
+import { isDev } from '@/lib/env';
 import { logger } from '@/lib/logger';
+import { pubSub } from '@/lib/redis';
 import { KickService } from '@/lib/services/kick';
 import { TwitchService } from '@/lib/services/twitch';
+import { Topics } from '@/types/pub-sub';
 import type { StreamCheckJob } from '@/types/queues';
 import { StreamPlatform } from '@/types/server';
 
@@ -34,6 +38,19 @@ export default async function (job: SandboxedJob<StreamCheckJob>) {
       return;
     }
 
+    if (isDev) {
+      pubSub.publish(
+        Topics.STREAMER_LIVE,
+        JSON.stringify(
+          serverToServer.parse({
+            type: 'streamer-live',
+            data: {
+              id: streamerId,
+            },
+          })
+        )
+      );
+    }
     logger
       .withMetadata({
         jobId: job.id,
@@ -51,6 +68,24 @@ export default async function (job: SandboxedJob<StreamCheckJob>) {
       logger.info('Clearing streamers cache');
       await cache.del('streamers');
 
+      // If streamer went live, broadcast the streamer status to the websocket
+      if (streamerDB.isLive === false && streamStatus.isLive) {
+        pubSub.publish(
+          Topics.STREAMER_LIVE,
+          JSON.stringify(
+            serverToServer.parse({
+              type: 'streamer-live',
+              data: {
+                id: streamerId,
+              },
+            })
+          )
+        );
+        logger.info(
+          `Published streamer live event to ${Topics.STREAMER_LIVE} for streamer ${streamerDB.name}`
+        );
+      }
+
       // Update the streamer status
       await updateStreamerStatus(streamerId, streamStatus);
 
@@ -63,6 +98,8 @@ export default async function (job: SandboxedJob<StreamCheckJob>) {
         );
     }
   } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: we need it for zod error!
+    console.log(error);
     logger
       .withError(error)
       .withMetadata({

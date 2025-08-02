@@ -3,6 +3,8 @@
   "exclude": ["node_modules"],
   "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.tsx"],
   "compilerOptions": {
+    "moduleResolution": "bundler",
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
