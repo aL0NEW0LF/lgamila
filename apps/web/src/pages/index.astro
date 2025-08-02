@@ -1,68 +1,243 @@
 ---
-import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/atoms/logo';
 import FullscreenLayout from '@/components/templates/fullscreen.astro';
 import { DownloadExtension } from '@/components/molecules/download-extension';
+import { StreamerStats } from '@/components/molecules/streamer-stats';
+import { FaGithub } from 'react-icons/fa6';
 ---
 
 <FullscreenLayout>
-  <div class="flex flex-col items-center justify-center gap-8">
-    <Logo />
-    <div class="flex items-end gap-2">
-      <h1 class="text-4xl">LGamila is still cooking</h1>
-      <div class="flex flex-row gap-2">
-        <div
-          class="h-2 w-2 bg-foreground animate-bounce [animation-delay:-0.3s]"
-        >
-        </div>
-        <div
-          class="h-2 w-2 bg-foreground animate-bounce [animation-delay:-0.15s]"
-        >
-        </div>
-        <div class="h-2 w-2 bg-foreground animate-bounce"></div>
-      </div>
+  <nav class="flex flex-row items-center justify-between w-full">
+    <div class="flex flex-row items-center gap-2">
+      <Logo className="size-16" />
     </div>
-
-    <Separator className="max-w-xs" />
-    <p class="font-plain text-center">
-      While we prepare the platform, you can follow us on <a
-        href="https://x.com/stormix_dev"
-        target="_blank"
-        class="text-accent">X</a
-      > or check out one of our projects:
-    </p>
-
-    <div class="flex justify-center text-center">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl"> LGamila Live Extension </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <img
-            src="/lgamila-live.svg"
-            alt="LGamila Live"
-            class="size-32 mx-auto mb-4"
-          />
-          <p class="max-w-md text-start">
-            A Chrome extension that shows you a real-time list of all Moroccan
-            Twitch and Kick streamers who are currently live.
-          </p>
-          <DownloadExtension client:only="react" />
-        </CardContent>
-      </Card>
+    <div class="flex flex-row items-center gap-2">
+      <Button variant="link">
+        <FaGithub className="size-4" />
+        <a href="https://github.com/Stormix/lgamila" target="_blank">
+          We're open source!
+        </a>
+      </Button>
     </div>
+  </nav>
 
-    <div class="flex flex-col items-center gap-4 text-center">
-      <p class="text-muted-foreground">
-        Know a Moroccan streamer who should be on our list?
+  <div class="flex flex-col gap-24 max-w-7xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <div class="text-center space-y-8 py-20">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight">
+        Empowering <span class="text-[#FF3319]">Moroccan</span> Streamers
+      </h1>
+      <p class="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        We're a collective of Moroccan streamers building tools and fostering community to help 
+        our creators prosper and gain the recognition they deserve.
       </p>
-      <a href="/suggest">
-        <Button variant="outline">
-          Suggest a Streamer
-        </Button>
-      </a>
     </div>
+
+    <!-- Mission Section -->
+    <section class="space-y-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">Our Mission</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          Building a thriving ecosystem where Moroccan streamers can grow, connect, and succeed
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Card className="text-center">
+          <CardHeader>
+            <CardTitle className="text-xl flex flex-col items-center gap-3">
+              <span class="text-4xl">🤝</span>
+              Community Building
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Connecting Moroccan streamers and viewers to foster a supportive, growing community.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="text-center">
+          <CardHeader>
+            <CardTitle className="text-xl flex flex-col items-center gap-3">
+              <span class="text-4xl">🛠️</span>
+              Tool Development
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Creating innovative tools and platforms that help streamers grow their audience and reach.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="text-center">
+          <CardHeader>
+            <CardTitle className="text-xl flex flex-col items-center gap-3">
+              <span class="text-4xl">🌟</span>
+              Talent Promotion
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">
+              Highlighting and promoting talented Moroccan creators to gain the recognition they deserve.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="space-y-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">Our Projects</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          We're building a suite of tools to support and elevate the Moroccan streaming community
+        </p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl flex items-center gap-3">
+              <img src="/lgamila-live.svg" alt="LGamila Live" class="size-8" />
+              LGamila Live Extension
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p class="text-muted-foreground">
+              A Chrome extension that provides real-time tracking of Moroccan streamers across Twitch and Kick platforms.
+            </p>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="text-accent">✓</span>
+                <span>Live status notifications</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-accent">✓</span>
+                <span>Quick access from browser</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-accent">✓</span>
+                <span>Support for multiple platforms</span>
+              </div>
+            </div>
+            <DownloadExtension client:only="react" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl flex items-center gap-3">
+              <span class="text-2xl">🚀</span>
+              More Tools Coming
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p class="text-muted-foreground">
+              This is just the beginning. We're working on additional tools to further support our streaming community.
+            </p>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="text-muted-foreground">→</span>
+                <span>Analytics dashboard for streamers</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-muted-foreground">→</span>
+                <span>Collaboration and networking platform</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-muted-foreground">→</span>
+                <span>Content creation and promotion tools</span>
+              </div>
+            </div>
+            <Button variant="outline" disabled>
+              Stay Tuned
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Community Stats Section -->
+    <section class="bg-muted/30 rounded-lg p-8">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold mb-4">Our Growing Community</h2>
+        <p class="text-muted-foreground">Building a stronger Moroccan streaming ecosystem together</p>
+      </div>
+      <StreamerStats client:load />
+    </section>
+
+    <!-- Vision Section -->
+    <section class="space-y-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">🎯 Our Vision</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          We envision a future where every talented Moroccan streamer has the tools and community support to thrive
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Analytics Platform</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground mb-3">
+              Comprehensive analytics dashboard to help streamers understand their audience and optimize their content.
+            </p>
+            <span class="text-xs bg-accent/10 text-accent px-2 py-1 rounded">In Planning</span>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Promotion Tools</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground mb-3">
+              Tools to help streamers create engaging content, schedule posts, and grow their online presence.
+            </p>
+            <span class="text-xs bg-accent/10 text-accent px-2 py-1 rounded">Researching</span>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Community Platform</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground mb-3">
+              A dedicated space for the Moroccan streaming community to connect, share, and support each other.
+            </p>
+            <span class="text-xs bg-accent/10 text-accent px-2 py-1 rounded">Conceptualizing</span>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Join Movement Section -->
+    <section class="text-center space-y-8 bg-muted/20 rounded-lg p-12">
+      <div class="space-y-4">
+        <h2 class="text-3xl font-bold">Join the Movement</h2>
+        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Be part of the change. Help us build a thriving ecosystem for Moroccan streamers and creators.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <a href="https://x.com/stormix_dev" target="_blank">
+          <Button size="lg" className="w-full sm:w-auto">
+            Follow Our Journey
+          </Button>
+        </a>
+        <a href="/suggest">
+          <Button variant="outline" size="lg" className="w-full sm:w-auto">
+            Suggest a Streamer
+          </Button>
+        </a>
+      </div>
+      <p class="text-sm text-muted-foreground">
+        By streamers, for streamers. Let's grow together. 🇲🇦
+      </p>
+    </section>
   </div>
 </FullscreenLayout>
