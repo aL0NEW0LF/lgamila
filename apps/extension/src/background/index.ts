@@ -24,3 +24,8 @@ async function createOffscreenDocument() {
 }
 
 createOffscreenDocument();
+
+chrome.runtime.onStartup.addListener(createOffscreenDocument);
+self.onmessage = (_e) => {
+  // Keep the offscreen document alive
+};

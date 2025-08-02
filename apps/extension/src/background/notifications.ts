@@ -34,7 +34,7 @@ const showNotification = (parsed: ServerToClient) => {
 };
 
 chrome.runtime.onMessage.addListener(async (message) => {
-  logger.info('Received message', message);
+  logger.info('Received message', JSON.stringify(message));
   const parsed = serverToClient.safeParse(message);
 
   if (!parsed.success) {
@@ -69,7 +69,7 @@ chrome.runtime.onMessage.addListener(async (message) => {
         return;
       }
 
-      logger.info('Creating notification', parsed.data.data);
+      logger.info('Creating notification', JSON.stringify(parsed.data.data));
       chrome.notifications.create(
         {
           type: 'basic',
@@ -92,6 +92,10 @@ chrome.runtime.onMessage.addListener(async (message) => {
       );
 
       showNotification(parsed.data);
+      break;
+    }
+    case 'ping': {
+      logger.info('Ping received', JSON.stringify(parsed.data.data));
       break;
     }
     default:

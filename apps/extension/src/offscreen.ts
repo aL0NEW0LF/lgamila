@@ -3,6 +3,12 @@ import { WS_URL } from './lib/constants';
 import { logger } from './lib/logger';
 
 logger.info('Offscreen script loaded');
+
+// Keep the offscreen document alive
+setInterval(async () => {
+  (await navigator.serviceWorker.ready).active.postMessage('keepAlive');
+}, 10_000);
+
 const ws = new WebSocket(WS_URL);
 
 ws.onopen = () => {
@@ -26,6 +32,12 @@ ws.onmessage = async (event) => {
       logger.info('WebSocket connected', payload.id);
       break;
     case 'ping':
+      logger.info('WebSocket ping received', payload.id);
+      chrome.runtime.sendMessage({
+        type: 'ping',
+        data: { id: payload.id, timestamp: Date.now() },
+      });
+
       ws.send(
         JSON.stringify(
           clientToServer.parse({
