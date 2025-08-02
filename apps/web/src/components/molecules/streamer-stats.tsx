@@ -31,7 +31,6 @@ function StreamerStatsClient() {
   const totalStreamers = data?.streamers.length || 0;
   const liveStreamers = data?.streamers.filter((s) => s.isLive).length || 0;
   const viewers = data?.streamers.reduce((acc, s) => acc + s.viewerCount, 0) || 0;
-  const supportedPlatforms = 2; // Twitch and Kick
 
   if (error) {
     // Fallback to static numbers if API fails
@@ -72,10 +71,6 @@ function StreamerStatsClient() {
           {isLoading ? "..." : viewers}
         </div>
         <div className="text-muted-foreground">Live Viewers</div>
-      </div>
-      <div className="space-y-2">
-        <div className="text-4xl font-bold text-accent">{supportedPlatforms}</div>
-        <div className="text-muted-foreground">Platforms Supported</div>
       </div>
     </div>
   );
