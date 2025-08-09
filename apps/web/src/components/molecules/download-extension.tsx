@@ -36,10 +36,25 @@ export const DownloadExtension = () => {
       <div className="flex flex-row items-center justify-center gap-2">
         <Button
           icon={<FaBraveReverse className="size-4" />}
+          onClick={() => {
+            window.open('/brave', '_blank');
+          }}
           variant="outline"
         />
-        <Button icon={<SiOperagx className="size-4" />} variant="outline" />{' '}
-        <Button icon={<TbBrandEdge className="size-4" />} variant="outline" />
+        <Button
+          icon={<SiOperagx className="size-4" />}
+          onClick={() => {
+            window.open('/opera', '_blank');
+          }}
+          variant="outline"
+        />
+        <Button
+          icon={<TbBrandEdge className="size-4" />}
+          onClick={() => {
+            window.open('/edge', '_blank');
+          }}
+          variant="outline"
+        />
       </div>
     </div>
   );

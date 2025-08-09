@@ -1,5 +1,6 @@
 // @ts-check
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -11,7 +12,20 @@ import {
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), favicons()],
+  site: 'https://www.lgamila.ma',
+  integrations: [
+    react(),
+    favicons(),
+    sitemap({
+      customPages: [
+        'https://www.lgamila.ma/chrome',
+        'https://www.lgamila.ma/firefox',
+        'https://www.lgamila.ma/brave',
+        'https://www.lgamila.ma/opera',
+        'https://www.lgamila.ma/edge',
+      ],
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
