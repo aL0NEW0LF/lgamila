@@ -1,7 +1,6 @@
 // @ts-check
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import favicons from 'astro-favicons';
@@ -10,9 +9,12 @@ import {
   FIREFOX_EXTENSION_URL,
 } from './src/lib/constants';
 
+import netlify from '@astrojs/netlify';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.lgamila.ma',
+
   integrations: [
     react(),
     favicons(),
@@ -26,30 +28,33 @@ export default defineConfig({
       ],
     }),
   ],
+
   vite: {
     plugins: [tailwindcss()],
   },
-  adapter: vercel(),
+
   redirects: {
-    '/brave': {
-      status: 308,
-      destination: CHROME_EXTENSION_URL,
-    },
-    '/opera': {
-      status: 308,
-      destination: CHROME_EXTENSION_URL,
-    },
-    '/edge': {
-      status: 308,
-      destination: CHROME_EXTENSION_URL,
-    },
-    '/chrome': {
-      status: 308,
-      destination: CHROME_EXTENSION_URL,
-    },
-    '/firefox': {
-      status: 308,
-      destination: FIREFOX_EXTENSION_URL,
-    },
-  },
+   '/brave': {
+     status: 308,
+     destination: CHROME_EXTENSION_URL,
+   },
+   '/opera': {
+     status: 308,
+     destination: CHROME_EXTENSION_URL,
+   },
+   '/edge': {
+     status: 308,
+     destination: CHROME_EXTENSION_URL,
+   },
+   '/chrome': {
+     status: 308,
+     destination: CHROME_EXTENSION_URL,
+   },
+   '/firefox': {
+     status: 308,
+     destination: FIREFOX_EXTENSION_URL,
+   },
+ },
+
+  adapter: netlify(),
 });
