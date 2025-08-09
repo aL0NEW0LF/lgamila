@@ -6,6 +6,7 @@ import api from './api';
 import ws, { websocket } from './api/ws';
 import { env, isDev } from './lib/env';
 import { logger } from './lib/logger';
+import { HealthService } from './lib/services/health';
 import type { ApiContext } from './types/api';
 
 import './lib/subscriber';
@@ -29,8 +30,10 @@ export const app = new Hono<ApiContext>()
       credentials: true,
     })
   )
-  .get('/health', (c) => {
-    return c.json({ status: 'ok' });
+  .get('/health', async (c) => {
+    const service = HealthService.getInstance();
+    const result = await service.check();
+    return c.json(result, result.status === 'ok' ? 200 : 503);
   })
   .route('/api', api)
   .route('/ws', ws);
