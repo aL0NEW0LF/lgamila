@@ -2,9 +2,7 @@
 
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/stormix/lgamila)
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Stormix/lgamila?utm_source=oss&utm_medium=github&utm_campaign=Stormix%2Flgamila&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
-
 [![API Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjm.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-
 [![Web Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjk.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
 <div align="center">
