@@ -4,8 +4,10 @@ import {
   asc,
   desc,
   eq,
+  isNull,
   ilike,
   isNotNull,
+  ne,
   or,
   type SQL,
 } from 'drizzle-orm';
@@ -43,8 +45,10 @@ const api = new Hono<ApiContext>()
         });
       }
 
-      // Build the where condition with approved filter
-      const conditions: SQL[] = [eq(streamer.approved, true)];
+      const conditions: SQL[] = [
+        eq(streamer.approved, true),
+        or(isNull(streamer.category), ne(streamer.category, 'Slots & Casino'))!
+      ];
 
       if (search && platform) {
         const searchCondition =
@@ -62,7 +66,8 @@ const api = new Hono<ApiContext>()
           )!
         );
       }
-
+ 
+      
       const streamers = await db.query.streamer.findMany({
         columns: {
           id: true,
@@ -107,7 +112,8 @@ const api = new Hono<ApiContext>()
       where: and(
         eq(streamer.approved, true),
         isNotNull(streamer.twitchUsername),
-        isNotNull(streamer.kickUsername)
+        isNotNull(streamer.kickUsername),
+        or(isNull(streamer.category), ne(streamer.category, 'Slots & Casino'))!
       ),
       columns: {
         id: true,
