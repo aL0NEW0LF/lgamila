@@ -226,8 +226,7 @@ async function checkKickStatus(
     return null;
   }
 
-  const { isLive: _isLive, stream } = result.value;
-  const isLive = true;
+  const { isLive, stream } = result.value;
   return {
     isLive: isLive ?? false,
     platform: isLive ? StreamPlatform.Kick : null,
