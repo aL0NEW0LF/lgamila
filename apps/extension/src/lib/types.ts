@@ -43,3 +43,10 @@ export interface Settings {
   /** Whether to play notification sound */
   playNotificationSound: boolean;
 }
+
+export type SortOption =
+  | 'default'
+  | 'viewers-desc'
+  | 'viewers-asc'
+  | 'name-asc'
+  | 'name-desc';

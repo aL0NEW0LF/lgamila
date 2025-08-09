@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from 'lucide-react';
 import { FaRegStar, FaStar } from 'react-icons/fa6';
 import { FiTwitch } from 'react-icons/fi';
 import { GoDotFill } from 'react-icons/go';
@@ -22,13 +23,19 @@ const streamerDescription = (streamer: Streamer) => {
 export function StreamerCard({
   streamer,
   isFavorite,
+  isBlocked,
   onFavorite,
+  onBlock,
 }: {
   streamer: Streamer;
   isFavorite: boolean;
+  isBlocked: boolean;
   onFavorite: (streamer: Streamer) => void;
+  onBlock: (streamer: Streamer) => void;
 }) {
   const StarIcon = isFavorite ? FaStar : FaRegStar;
+  const BlockIcon = isBlocked ? EyeOff : Eye;
+
   const onClick = () => {
     const twitchUrl = streamer.twitchUsername
       ? `https://www.twitch.tv/${streamer.twitchUsername}`
@@ -43,9 +50,7 @@ export function StreamerCard({
 
     if (streamer.isLive) {
       window.open(
-        streamer.livePlatform === 'twitch'
-          ? twitchUrl
-          : kickUrl,
+        streamer.livePlatform === 'twitch' ? twitchUrl : kickUrl,
         '_blank'
       );
     } else {
@@ -61,13 +66,33 @@ export function StreamerCard({
         }
       )}
     >
-      <div className="flex flex-row gap-2 items-center">
-        <div
-          className="px-2 cursor-pointer text-primary"
-          onClick={() => onFavorite(streamer)}
-        >
-          <StarIcon size={16} />
-        </div>
+      <div className="flex flex-col gap-1 items-center">
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className="px-2 cursor-pointer text-primary"
+              onClick={() => onFavorite(streamer)}
+            >
+              <StarIcon size={16} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className="px-2 cursor-pointer text-muted-foreground hover:text-primary"
+              onClick={() => onBlock(streamer)}
+            >
+              <BlockIcon size={16} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            {isBlocked ? 'Show streamer' : 'Hide streamer'}
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       <div className="flex flex-row gap-2 justify-start items-center flex-grow">

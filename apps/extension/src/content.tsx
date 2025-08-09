@@ -187,11 +187,21 @@ export default function Root() {
         const settings = await storage.get<Settings>('settings');
         const favorites =
           (await storage.get<Streamer['id'][]>('favorites')) || [];
+        const blockedStreamers =
+          (await storage.get<Streamer['id'][]>('blocked')) || [];
 
         // Skip if notifications are disabled
         if (settings?.notifyWhenStreamerIsLive === false) {
           logger.info(
             'Notifications disabled, skipping content script notification'
+          );
+          return;
+        }
+
+        // Skip if streamer is blocked
+        if (blockedStreamers.includes(parsed.data.data.id)) {
+          logger.info(
+            'Streamer is blocked, skipping content script notification'
           );
           return;
         }

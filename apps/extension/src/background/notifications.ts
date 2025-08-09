@@ -51,10 +51,18 @@ chrome.runtime.onMessage.addListener(async (message) => {
       const settings = await storage.get<Settings>('settings');
       const favorites =
         (await storage.get<Streamer['id'][]>('favorites')) || [];
+      const blockedStreamers =
+        (await storage.get<Streamer['id'][]>('blocked')) || [];
 
       // Skip if notifications are disabled
       if (settings?.notifyWhenStreamerIsLive === false) {
         logger.info('Notifications disabled, skipping browser notification');
+        return;
+      }
+
+      // Skip if streamer is blocked
+      if (blockedStreamers.includes(parsed.data.data.id)) {
+        logger.info('Streamer is blocked, skipping browser notification');
         return;
       }
 

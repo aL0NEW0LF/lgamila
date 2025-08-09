@@ -57,7 +57,8 @@
       },
       "complexity": {
         "noVoid": "off",
-        "noThisInStatic": "off"
+        "noThisInStatic": "off",
+        "noExcessiveCognitiveComplexity": "off"
       },
       "suspicious": {
         "useAwait": "off"
