@@ -29,6 +29,29 @@ export function StreamerCard({
   onFavorite: (streamer: Streamer) => void;
 }) {
   const StarIcon = isFavorite ? FaStar : FaRegStar;
+  const onClick = () => {
+    const twitchUrl = streamer.twitchUsername
+      ? `https://www.twitch.tv/${streamer.twitchUsername}`
+      : null;
+    const kickUrl = streamer.kickUsername
+      ? `https://kick.com/${streamer.kickUsername}`
+      : null;
+
+    if (!(twitchUrl || kickUrl)) {
+      return;
+    }
+
+    if (streamer.isLive) {
+      window.open(
+        streamer.livePlatform === 'twitch'
+          ? twitchUrl
+          : kickUrl,
+        '_blank'
+      );
+    } else {
+      window.open(twitchUrl || kickUrl, '_blank');
+    }
+  };
   return (
     <div
       className={cn(
@@ -50,7 +73,10 @@ export function StreamerCard({
       <div className="flex flex-row gap-2 justify-start items-center flex-grow">
         <Tooltip>
           <TooltipTrigger>
-            <div className="flex flex-row gap-2 justify-start items-center">
+            <div
+              className="flex flex-row gap-2 justify-start items-center"
+              onClick={onClick}
+            >
               <Avatar>
                 <AvatarImage src={streamer.avatarUrl} />
                 <AvatarFallback>{streamer.name.charAt(0)}</AvatarFallback>
@@ -75,7 +101,6 @@ export function StreamerCard({
       </div>
       <div className={cn('flex flex-row gap-1 items-center px-4 w-fit')}>
         <Button
-          disabled={!streamer.isLive}
           icon={
             streamer.isLive ? (
               streamer.livePlatform === 'twitch' ? (
@@ -85,16 +110,7 @@ export function StreamerCard({
               )
             ) : null
           }
-          onClick={() => {
-            if (streamer.isLive) {
-              window.open(
-                streamer.livePlatform === 'twitch'
-                  ? `https://www.twitch.tv/${streamer.twitchUsername}`
-                  : `https://kick.com/${streamer.kickUsername}`,
-                '_blank'
-              );
-            }
-          }}
+          onClick={onClick}
           variant={streamer.isLive ? 'outline' : 'ghost'}
         >
           <span className="text-xs">
