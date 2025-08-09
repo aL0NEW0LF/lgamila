@@ -76,6 +76,8 @@ const api = new Hono<ApiContext>()
           twitchUsername: true,
           kickUsername: true,
           isLive: true,
+          twitchId: true,
+          kickId: true,
           livePlatform: true,
           livePlatforms: true,
           viewerCount: true,
