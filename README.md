@@ -3,6 +3,10 @@
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/stormix/lgamila)
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Stormix/lgamila?utm_source=oss&utm_medium=github&utm_campaign=Stormix%2Flgamila&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
+[![API Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjm.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
+[![Web Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjk.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
 <div align="center">
 
 ![LGamila Logo](./apps/web/public/lgamila-live.svg)
@@ -64,6 +68,7 @@ This monorepo includes the following packages/apps:
 
 - `@lgamila/shared`: Shared utilities and type definitions
 - `@lgamila/logging`: Structured logging with context support and Sentry integration
+- `@lgamila/design-system`: Shared UI components built with Radix UI and Tailwind CSS
 - `@lgamila/typescript-config`: TypeScript configurations
 
 ## Getting Started
@@ -94,11 +99,7 @@ This monorepo includes the following packages/apps:
 
 3. **Set up environment variables:**
 
-   ```bash
-   cp .env.example .env
-   ```
-
-   Fill in the required environment variables in `.env` file.
+   Create environment files for the backend and other apps as needed. Refer to the individual app README files for specific environment variable requirements.
 
 4. **Set up the database:**
 
@@ -123,6 +124,24 @@ This monorepo includes the following packages/apps:
    pnpm --filter extension dev  # Browser extension
    ```
 
+## Development Commands
+
+### Code Quality
+
+```bash
+pnpm lint                  # Run linting across all packages
+pnpm format               # Format code across all packages
+pnpm check-types          # Type check all packages
+```
+
+### Build Commands
+
+```bash
+pnpm build                # Build all packages
+pnpm --filter web build   # Build only web app
+pnpm --filter extension build:all  # Build extension for all browsers
+```
+
 ## Usage
 
 ### Backend API
@@ -135,7 +154,7 @@ The backend provides a REST API for accessing streamer data:
 
 ### Browser Extension
 
-1. Build the extension: `pnpm --filter extension build:all`
+1. Build the extension using the command from the [Development Commands](#development-commands) section
 2. Load the extension in your browser:
    - **Chrome**: Load from `apps/extension/build/chrome-mv3-prod`
    - **Firefox**: Load from `apps/extension/build/firefox-mv2-prod`
