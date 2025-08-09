@@ -72,6 +72,7 @@ const api = new Hono<ApiContext>()
           kickUsername: true,
           isLive: true,
           livePlatform: true,
+          livePlatforms: true,
           viewerCount: true,
           category: true,
           title: true,
@@ -108,6 +109,19 @@ const api = new Hono<ApiContext>()
         isNotNull(streamer.twitchUsername),
         isNotNull(streamer.kickUsername)
       ),
+      columns: {
+        id: true,
+        name: true,
+        avatarUrl: true,
+        twitchUsername: true,
+        kickUsername: true,
+        isLive: true,
+        livePlatform: true,
+        livePlatforms: true,
+        viewerCount: true,
+        category: true,
+        title: true,
+      },
     });
 
     await cache.set('streamers-multi', JSON.stringify(streamers));
@@ -129,13 +143,20 @@ const api = new Hono<ApiContext>()
     async (c) => {
       const { name, twitchUsername, kickUsername } = await c.req.json();
 
+      // Strip URL from usernames if it's passed
+      const cleanTwitchUsername = twitchUsername.replace(
+        'https://www.twitch.tv/',
+        ''
+      );
+      const cleanKickUsername = kickUsername.replace('https://kick.com/', '');
+
       try {
         await db
           .insert(streamer)
           .values({
             name: name.trim().toLowerCase(),
-            twitchUsername: twitchUsername.trim().toLowerCase(),
-            kickUsername: kickUsername.trim().toLowerCase(),
+            twitchUsername: cleanTwitchUsername.trim().toLowerCase(),
+            kickUsername: cleanKickUsername.trim().toLowerCase(),
             approved: false,
           })
           .onConflictDoNothing();

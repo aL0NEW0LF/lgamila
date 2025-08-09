@@ -46,8 +46,8 @@ const determinePlatform = (url: string) => {
   return 'kick' as const;
 };
 
-const TWITCH_URL_REGEX = /https:\/\/www\.twitch\.tv\/([a-zA-Z0-9_]+)/;
-const KICK_URL_REGEX = /https:\/\/(www\.)?kick\.com\/([a-zA-Z0-9_]+)/;
+const TWITCH_URL_REGEX = /https:\/\/www\.twitch\.tv\/(?:popout\/)?([a-zA-Z0-9_]+)(?:\/chat)?/;
+const KICK_URL_REGEX = /https:\/\/(www\.)?kick\.com\/(?:popout\/)?([a-zA-Z0-9_-]+)(?:\/chat)?/;
 
 const getStreamerFromUrl = async (url: string) => {
   const twitchMatch = url.match(TWITCH_URL_REGEX);
@@ -87,7 +87,8 @@ const checkAndRedirect = async () => {
 
   if (
     currentStreamerData.isLive &&
-    currentStreamerData.livePlatform === platform
+    (currentStreamerData.livePlatform === platform ||
+      currentStreamerData.livePlatforms?.includes(platform))
   ) {
     logger.info(
       `Streamer is live on ${currentStreamerData.livePlatform}, do nothing!`
@@ -97,16 +98,17 @@ const checkAndRedirect = async () => {
 
   if (
     currentStreamerData.isLive &&
-    currentStreamerData.livePlatform !== platform
+    currentStreamerData.livePlatform !== platform &&
+    currentStreamerData.livePlatforms?.length === 1
   ) {
     logger.info(
       `Streamer is live on ${currentStreamerData.livePlatform}, switching to ${currentStreamerData.livePlatform}`
     );
-    const username =
-      currentStreamerData.livePlatform === 'twitch'
-        ? currentStreamerData.twitchUsername
-        : currentStreamerData.kickUsername;
-    window.location.href = `https://www.${currentStreamerData.livePlatform}.com/${username}`;
+    const platform = currentStreamerData.livePlatforms?.[0] ?? currentStreamerData.livePlatform
+    const username = platform === 'twitch'
+      ? currentStreamerData.twitchUsername
+      : currentStreamerData.kickUsername;
+    window.location.href = `https://www.${platform}.com/${username}`;
     return;
   }
 };

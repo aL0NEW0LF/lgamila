@@ -20,6 +20,9 @@ export interface Streamer {
   /** Platform the streamer is currently live on, if any */
   livePlatform: string | null;
 
+  /** Platforms the streamer is currently live on, if any */
+  livePlatforms: string[] | null;
+
   /** Current viewer count if live, 0 if offline */
   viewerCount: number;
 

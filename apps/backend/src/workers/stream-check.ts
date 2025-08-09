@@ -17,6 +17,7 @@ import { StreamPlatform } from '@/types/server';
 interface StreamStatus {
   isLive: boolean;
   platform: StreamPlatform | null;
+  platforms: StreamPlatform[] | null;
   viewerCount: number;
   category: string | null;
   title: string | null;
@@ -94,7 +95,7 @@ export default async function (job: SandboxedJob<StreamCheckJob>) {
           jobId: job.id,
         })
         .info(
-          `Updated ${streamerDB.name} live status: ${streamStatus.isLive} on ${streamStatus.platform}`
+          `Updated ${streamerDB.name} live status: ${streamStatus.isLive} on ${streamStatus.platforms?.join(', ')}`
         );
     }
   } catch (error) {
@@ -117,6 +118,7 @@ function hasStreamStatusChanged(
   return (
     streamStatus.isLive !== (streamerDB.isLive ?? false) ||
     streamStatus.platform !== streamerDB.livePlatform ||
+    streamStatus.platforms !== streamerDB.livePlatforms ||
     streamStatus.category !== streamerDB.category ||
     streamStatus.viewerCount !== streamerDB.viewerCount ||
     streamStatus.title !== streamerDB.title
@@ -132,6 +134,7 @@ async function updateStreamerStatus(
     .set({
       isLive: streamStatus.isLive,
       livePlatform: streamStatus.platform,
+      livePlatforms: streamStatus.platforms,
       viewerCount: streamStatus.viewerCount,
       category: streamStatus.category,
       title: streamStatus.title,
@@ -146,20 +149,26 @@ async function checkStreamStatus(
   const twitchStatus = await checkTwitchStatus(streamerDB, jobId);
   const kickStatus = await checkKickStatus(streamerDB, jobId);
 
-  // Determine overall status - prioritize the platform they're currently live on
-  // If live on multiple platforms, prioritize Twitch (can be changed based on business logic)
-  if (twitchStatus?.isLive) {
+  if (twitchStatus?.isLive && !kickStatus?.isLive) {
     return twitchStatus;
   }
 
-  if (kickStatus?.isLive) {
+  if (kickStatus?.isLive && !twitchStatus?.isLive) {
     return kickStatus;
+  }
+
+  if (twitchStatus?.isLive && kickStatus?.isLive) {
+    return {
+      ...twitchStatus,
+      platforms: [StreamPlatform.Twitch, StreamPlatform.Kick],
+    };
   }
 
   // If not live on any platform, return offline status
   return {
     isLive: false,
     platform: null,
+    platforms: null,
     viewerCount: 0,
     category: null,
     title: null,
@@ -190,6 +199,7 @@ async function checkTwitchStatus(
   return {
     isLive,
     platform: isLive ? StreamPlatform.Twitch : null,
+    platforms: isLive ? [StreamPlatform.Twitch] : null,
     viewerCount: stream?.viewerCount ?? 0,
     category: stream?.game ?? null,
     title: stream?.title ?? null,
@@ -216,10 +226,12 @@ async function checkKickStatus(
     return null;
   }
 
-  const { isLive, stream } = result.value;
+  const { isLive: _isLive, stream } = result.value;
+  const isLive = true;
   return {
     isLive: isLive ?? false,
     platform: isLive ? StreamPlatform.Kick : null,
+    platforms: isLive ? [StreamPlatform.Kick] : null,
     viewerCount: stream?.viewerCount ?? 0,
     category: stream?.game ?? null,
     title: stream?.title ?? null,

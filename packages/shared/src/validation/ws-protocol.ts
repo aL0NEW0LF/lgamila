@@ -18,6 +18,7 @@ export const serverToClient = z.discriminatedUnion('type', [
       id: z.string(),
       name: z.string(),
       platform: z.string().nullable(),
+      platforms: z.array(z.string()).nullable(),
       viewerCount: z.number().nullable(),
       category: z.string().nullable(),
       title: z.string().nullable(),

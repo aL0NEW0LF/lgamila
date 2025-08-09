@@ -47,7 +47,8 @@ export const streamer = pgTable(
     name: text('name').notNull(),
     avatarUrl: text('avatar_url'),
     isLive: boolean('is_live').default(false),
-    livePlatform: streamPlatformEnum('live_platform'),
+    livePlatform: streamPlatformEnum('live_platform'),// DEPRECATED
+    livePlatforms: streamPlatformEnum('live_platforms').array(),
     viewerCount: integer('viewer_count').default(0),
     category: text('category'),
     title: text('title'),

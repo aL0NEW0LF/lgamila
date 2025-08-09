@@ -125,23 +125,35 @@ export function StreamerCard({
         </Tooltip>
       </div>
       <div className={cn('flex flex-row gap-1 items-center px-4 w-fit')}>
-        <Button
-          icon={
-            streamer.isLive ? (
-              streamer.livePlatform === 'twitch' ? (
-                <FiTwitch />
-              ) : (
-                <RiKickLine />
-              )
-            ) : null
-          }
-          onClick={onClick}
-          variant={streamer.isLive ? 'outline' : 'ghost'}
-        >
-          <span className="text-xs">
-            {streamer.isLive ? 'Live' : 'Offline'}
-          </span>
-        </Button>
+        {!streamer.livePlatforms && streamer.livePlatform && (
+          <Button
+            icon={streamer.livePlatform === 'twitch' ? <FiTwitch /> : <RiKickLine />}
+            onClick={onClick}
+            variant={streamer.isLive ? 'outline' : 'ghost'}
+          >
+            <span className="text-xs">{streamer.livePlatform}</span>
+          </Button>
+        )}
+        {streamer.livePlatforms?.map((platform) => (
+          <Button
+            icon={platform === 'twitch' ? <FiTwitch /> : <RiKickLine />}
+            key={platform}
+            onClick={onClick}
+            variant={streamer.isLive ? 'outline' : 'ghost'}
+          >
+            {streamer.livePlatforms.length === 1 && (
+              <span className="text-xs">{platform}</span>
+            )}
+          </Button>
+        ))}
+        {!streamer.isLive && (
+          <Button
+            onClick={onClick}
+            variant="ghost"
+          >
+            <span className="text-xs">Offline</span>
+          </Button>
+        )}
       </div>
     </div>
   );

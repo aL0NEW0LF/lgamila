@@ -1,0 +1,1 @@
+ALTER TABLE "streamer" ADD COLUMN "live_platforms" "stream_platform"[];

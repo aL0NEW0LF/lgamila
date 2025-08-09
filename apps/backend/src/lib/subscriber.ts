@@ -44,6 +44,7 @@ pubSub.on('message', async (channel, message) => {
           id: parsed.data.data.id,
           name: streamerDB.name,
           platform: streamerDB.livePlatform,
+          platforms: streamerDB.livePlatforms,
           viewerCount: streamerDB.viewerCount,
           category: streamerDB.category,
           title: streamerDB.title,
