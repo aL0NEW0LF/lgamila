@@ -1,19 +1,19 @@
 # LGamila Stream Platform
 
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/stormix/lgamila)
-![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Stormix/lgamila?utm_source=oss&utm_medium=github&utm_campaign=Stormix%2Flgamila&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
-[![API Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjm.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-[![Web Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjk.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/lgamila/lgamila)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/lgamila/lgamila?utm_source=oss&utm_medium=github&utm_campaign=lgamila%2Flgamila&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+[![API Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjm.svg)](https://status.lgamila.ma/)
+[![Web Status](https://uptime.betterstack.com/status-badges/v1/monitor/22wjk.svg)](https://status.lgamila.ma/)
 
 <div align="center">
 
 ![LGamila Logo](./apps/web/public/lgamila-live.svg)
 
-### LGamila - Moroccan Streaming Platform
+### LGamila - Empowering Moroccan Streamers 🇲🇦
 
-A comprehensive platform for discovering and tracking Moroccan streamers on Twitch and Kick, featuring a browser extension, web platform, and robust backend API.
+_By streamers, for streamers._ A community-driven platform built to empower Moroccan content creators and help them thrive in the streaming ecosystem. We're not just building tools—we're building a movement to elevate Moroccan talent worldwide.
 
-[Download Extension](#browser-extension) · [Report Bug](https://github.com/stormix/lgamila/issues) · [Request Feature](https://github.com/stormix/lgamila/issues)
+[Download Extension](https://www.lgamila.ma/) · [Report Bug](https://github.com/lgamila/lgamila/issues) · [Request Feature](https://github.com/stormix/lgamila/issues)
 
 </div>
 
@@ -22,29 +22,48 @@ A comprehensive platform for discovering and tracking Moroccan streamers on Twit
 ## Table of Contents
 
 1. [About the Project](#about-the-project)
-2. [Screenshots](#screenshots)
-3. [What's Inside?](#whats-inside)
-4. [Getting Started](#getting-started)
+2. [Mission & Vision](#-mission--vision)
+3. [Screenshots](#screenshots)
+4. [What's Inside?](#whats-inside)
+5. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Installation](#installation)
-5. [Usage](#usage)
-6. [Releases](#releases)
-7. [Contributing](#contributing)
-8. [License](#license)
-9. [Contact](#contact)
-10. [Acknowledgments](#acknowledgments)
+6. [Usage](#usage)
+7. [Community Impact](#-community-impact)
+8. [Releases](#releases)
+9. [Contributing](#contributing)
+10. [License](#license)
+11. [Contact](#contact)
+12. [Acknowledgments](#acknowledgments)
 
 ## About the Project
 
-LGamila is a platform dedicated to the Moroccan streaming community, providing tools to discover and follow Moroccan content creators across Twitch and Kick platforms. The project consists of a browser extension that shows real-time streaming status, a web platform for community engagement, and a robust backend API that tracks streamers across multiple platforms.
+LGamila started as a passion project by Moroccan streamers who wanted to see their community thrive. We recognized that talented Moroccan creators needed better visibility and tools to grow their audience, so we built a comprehensive ecosystem to address these challenges.
 
-### Key Features
+**Our story:** Born from the vibrant Moroccan streaming community, LGamila is more than just a technical solution—it's a collective effort to build the infrastructure our creators deserve. We're streamers building for streamers, understanding the unique challenges and opportunities within our community.
 
-- **Real-time Stream Tracking**: Monitor live status across Twitch and Kick
-- **Browser Extension**: Chrome extension showing live Moroccan streamers
-- **Web Platform**: Community-driven platform for discovering streamers
-- **Streamer Suggestions**: Community can suggest new streamers to add
-- **Cross-platform Support**: Unified view of streamers across multiple platforms
+## 🎯 Mission & Vision
+
+**Mission:** To provide Moroccan streamers with world-class tools and community support, helping them gain the recognition they deserve and build sustainable streaming careers.
+
+**Vision:** A future where every talented Moroccan streamer has the resources, visibility, and community support needed to thrive on the global stage.
+
+### What Drives Us
+
+- 🤝 **Community First**: Everything we build is designed with our community's needs at the forefront
+- 🛠️ **Innovation**: Creating cutting-edge tools that give Moroccan streamers a competitive advantage
+- 🌟 **Recognition**: Amplifying Moroccan talent and showcasing our creators to the world
+- 🚀 **Growth**: Providing the infrastructure for sustainable streaming careers
+
+### 🚀 Community-Driven Features
+
+- **🔴 Real-time Discovery**: Never miss when your favorite Moroccan streamers go live across Twitch and Kick
+- **📱 Browser Extension**: Instant access to live Moroccan streamers with desktop notifications
+- **🌐 Community Web Platform**: Discover new creators and connect with fellow community members
+- **🎯 Streamer Spotlight**: Community-powered suggestions to help talented creators gain visibility
+- **🔄 Multi-Platform Unity**: See all Moroccan streamers in one place, regardless of their platform
+- **📊 Growth Analytics**: _(Coming Soon)_ Help streamers understand and grow their audience
+- **🤝 Creator Networking**: _(Coming Soon)_ Connect Moroccan streamers for collaboration opportunities
 
 ## Screenshots
 
@@ -156,19 +175,31 @@ The backend provides a REST API for accessing streamer data:
 2. Load the extension in your browser:
    - **Chrome**: Load from `apps/extension/build/chrome-mv3-prod`
    - **Firefox**: Load from `apps/extension/build/firefox-mv2-prod`
-3. The extension will show live Moroccan streamers in the popup
+3. Get instant notifications when Moroccan streamers go live and never miss your favorite creators
 
-#### Download Pre-built Extension
+#### Download Extension
 
-You can also download pre-built extension files from our [GitHub Releases](https://github.com/stormix/lgamila/releases).
+Visit our website at [lgamila.ma](https://www.lgamila.ma/) to download the extension for your browser with easy installation instructions.
 
 ### Web Platform
 
-Visit the web platform to:
+Visit [lgamila.ma](https://www.lgamila.ma/) to:
 
-- Discover new Moroccan streamers
-- Suggest streamers to be added to the platform
-- Learn about the project
+- **Discover** talented Moroccan streamers across all platforms
+- **Support** creators by suggesting new streamers to feature
+- **Connect** with our growing community of streamers and viewers
+- **Learn** about our mission to empower Moroccan creators
+
+## 📈 Community Impact
+
+Since launching, LGamila has been making a tangible impact on the Moroccan streaming community:
+
+- **Growing Network**: Connecting streamers and viewers across Morocco and the diaspora
+- **Increased Visibility**: Helping talented creators gain recognition they deserve
+- **Cross-Platform Discovery**: Unifying the fragmented streaming landscape for Moroccan content
+- **Community Collaboration**: Fostering connections between creators for mutual growth
+
+_Want to be part of our growing community? [Download the extension](https://www.lgamila.ma/) or [suggest a streamer](https://www.lgamila.ma/suggest) today!_
 
 ## Releases
 
@@ -179,7 +210,7 @@ Extension releases are automatically built and published via GitHub Actions. Eac
 
 ### Download Latest Release
 
-Visit our [GitHub Releases page](https://github.com/stormix/lgamila/releases) to download the latest extension builds.
+Visit [lgamila.ma](https://www.lgamila.ma/) to download the latest extension builds with easy installation for Chrome, Firefox, and other browsers.
 
 ### Creating Releases
 
@@ -219,12 +250,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Project Link**: [https://github.com/stormix/lgamila](https://github.com/stormix/lgamila)
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-This project was made possible thanks to the amazing open source community and the Moroccan streaming community, especially:
+LGamila exists because of the incredible Moroccan streaming community and the open source ecosystem that powers our tools. Special recognition goes to:
 
-- [Zikoos Jam](https://www.twitch.tv/zikoos_jam) - Original project inspiration
-- [EKB9816](https://x.com/ekb9816) - Project designer and logo creator
+### 🇲🇦 Community Heroes
+
+- [Zikoos Jam](https://www.twitch.tv/zikoos_jam) - Original inspiration and the spark that started this journey
+- [EKB9816](https://x.com/ekb9816) - Our talented designer who created our beautiful logo and branding
+- **Every Moroccan streamer** featured on our platform - You make our community vibrant and inspiring
+- **The contributors and supporters** who help us grow and improve every day
+
+### 🛠️ Technology Partners
+
 - [Hono](https://hono.dev/) - Fast web framework
 - [Astro](https://astro.build/) - Modern web framework
 - [Plasmo](https://docs.plasmo.com/) - Browser extension framework
@@ -238,5 +276,13 @@ This project was made possible thanks to the amazing open source community and t
 ---
 
 <p align="center">
-  Made with ❤️ by the Moroccan Streaming Community
+  <strong>🇲🇦 Built by streamers, for streamers</strong><br/>
+  Made with ❤️ by the Moroccan Streaming Community<br/>
+  <em>Empowering creators, one stream at a time</em>
+</p>
+
+<p align="center">
+  <a href="https://www.lgamila.ma/">🌐 Visit Our Platform</a> •
+  <a href="https://www.lgamila.ma/">📱 Download Extension</a> •
+  <a href="https://www.lgamila.ma/suggest">🎯 Suggest a Streamer</a>
 </p>
