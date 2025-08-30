@@ -26,6 +26,17 @@ interface StreamStatus {
 export default async function (job: SandboxedJob<StreamCheckJob>) {
   try {
     const streamerId = job.data.streamerId;
+    
+    if (!streamerId) {
+      logger
+        .withMetadata({
+          jobId: job.id,
+          jobData: job.data,
+        })
+        .error('StreamerId is null or undefined');
+      return;
+    }
+    
     const streamerDB = await db.query.streamer.findFirst({
       where: eq(streamer.id, streamerId),
     });
