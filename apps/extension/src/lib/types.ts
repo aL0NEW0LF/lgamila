@@ -9,7 +9,7 @@ export interface Streamer {
   avatarUrl: string;
 
   /** Twitch username, if they stream on Twitch */
-  twitchUsername: string;
+  twitchUsername: string | null;
 
   /** Kick username, if they stream on Kick */
   kickUsername: string | null;
@@ -18,10 +18,10 @@ export interface Streamer {
   isLive: boolean;
 
   /** Platform the streamer is currently live on, if any */
-  livePlatform: string | null;
+  livePlatform: Platform | null;
 
   /** Platforms the streamer is currently live on, if any */
-  livePlatforms: string[] | null;
+  livePlatforms: Platform[] | null;
 
   /** Current viewer count if live, 0 if offline */
   viewerCount: number;
@@ -48,8 +48,10 @@ export interface Settings {
 }
 
 export type SortOption =
-  | 'default'
-  | 'viewers-desc'
-  | 'viewers-asc'
-  | 'name-asc'
-  | 'name-desc';
+  | "default"
+  | "viewers-desc"
+  | "viewers-asc"
+  | "name-asc"
+  | "name-desc";
+
+export type Platform = "twitch" | "kick";
